@@ -1,0 +1,60 @@
+﻿@page "/weather"
+@using Weather_App.Components
+@using Weather_App.Models;
+@using utilities;
+@inject HttpClient Client;
+
+
+
+<h3>Weather App</h3>
+
+<div class="input-group mb-3 mt-3">
+    <input type="text" class="form-control" placeholder="City name" 
+            @bind="city" />
+    <div class="input-group-append">
+        <button @onclick=GetWeather class="btn btn-outline-secondary" type="button">Search</button>
+    </div>
+</div>
+
+@if(weatherData != null)
+{
+    <div class="text-center">
+        <p class="display-5">@city</p>
+        <p class="display-1">@weatherData.current_weather.temperature</p>
+        <p class="display-6">@WeatherCode.Convert(weatherData.current_weather.weathercode)</p>
+    </div>
+}
+
+@if (weatherData != null)
+{
+    <div class="card-group">
+        @for(int i =0; i < @weatherData.daily.time.Length; i++)
+        {
+            <WeatherCard 
+                Day=@weatherData.daily.time[i]
+                MinWeatherData=@weatherData.daily.apparent_temperature_min[i]
+                MaxWeatherData=@weatherData.daily.apparent_temperature_max[i] />
+        }
+    </div>
+}
+
+
+
+@code {
+    string city = "";
+    WeatherModel weatherData;
+
+    async Task GetWeather()
+    {
+        var cityData = await GetCityData();
+        weatherData = await Client
+        .GetFromJsonAsync<WeatherModel>
+        (EndPoints.GetWeatherEndpoint(cityData.results[0].lat, cityData.results[0].lon));
+    }
+
+    async Task<CityData> GetCityData()
+    {
+        var cityData = await Client.GetFromJsonAsync<CityData>(EndPoints.GetGeoApifyEndpoint(city));
+        return cityData;
+    }
+}
