@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Index</PageTitle>
 
@@ -7,3 +8,57 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+<button @onclick=PrintPage class="btn btn-primary">Print this page!</button>
+
+
+<input type="text" placeholder="Your string" @bind=valueToEncode />
+<p>@encodedString</p>
+
+<button @onclick=ShowPass class="btn btn-primary">Show pass</button>
+
+<input type="text" @bind=uniqueId class="form-control" />
+<button @onclick=GenerateGuid class="btn btn-primary"> Generate GUID</button>
+<button @onclick=CopyGuid class="btn btn-primary"> Copy GUID</button>
+
+<button @onclick=ShowMessage>Show Error</button>
+
+
+
+@code {
+
+    string valueToEncode;
+    string encodedString;
+    string uniqueId;
+
+
+    async Task GenerateGuid()
+    {
+        uniqueId = Guid.NewGuid().ToString();
+    }
+
+    async Task ShowMessage()
+    {
+        await JSRuntime.InvokeVoidAsync("showError", "Permission denied!", "You do not have enough privileges");
+    }
+
+    async Task CopyGuid()
+    {
+        await JSRuntime.InvokeAsync<string>("copyToClipboard", uniqueId);
+    }
+
+    async Task PrintPage()
+    {
+        //await JSRuntime.InvokeVoidAsync("print");
+        //await JSRuntime.InvokeVoidAsync("alert", "Hi!");
+        encodedString =  await JSRuntime.InvokeAsync<string>("btoa", valueToEncode);
+        JSRuntime.InvokeVoidAsync("localStorage.setItem", "pass", encodedString);
+
+    }
+
+    async Task ShowPass()
+    {
+        var pass = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "pass");
+        await JSRuntime.InvokeVoidAsync("alert", pass);
+    }
+}

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rcVKThNapa4knPCatxJEKKO2/Hyqi34JDVLmQnkcdGk=",
+  "Hash": "l19yFQw4lnd4DS/HzczpeonT1G3HE4t0eWur/GSy8wI=",
   "Source": "Weather App",
   "BasePath": "/",
   "Mode": "Root",
@@ -7087,6 +7087,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\facundo.vega\\source\\repos\\Weather App\\Weather App\\wwwroot\\InteropDemo.js",
+      "SourceId": "Weather App",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\facundo.vega\\source\\repos\\Weather App\\Weather App\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "InteropDemo.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\InteropDemo.js"
     },
     {
       "Identity": "C:\\Users\\facundo.vega\\source\\repos\\Weather App\\Weather App\\wwwroot\\sample-data\\weather.json",
